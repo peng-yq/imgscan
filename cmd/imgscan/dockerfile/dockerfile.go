@@ -13,8 +13,9 @@ type dockerfileCommand struct {
 type Rule struct {
 	ID          string `yaml:"id" json:"id"`
 	Description string `yaml:"description" json:"description"`
+	Regex       string `yaml:"regex" json:"regex"`
+	Reference   string `yaml:"reference" json:"reference"`
 	Severity    string `yaml:"severity" json:"severity"`
-	Regex       string `yaml:"regex" json:"-"`
 }
 
 type options struct {
@@ -42,7 +43,7 @@ func (m dockerfileCommand) build() *cli.Command {
 			&cli.StringSliceFlag{
 				Name:        "ignore-file",
 				Usage:       "Ignore rules by using a file (remote url or file) that contains IDs of the default rules you want to ignore",
-				Aliases:     []string{"F"},
+				Aliases:     []string{"f"},
 				Destination: &opts.ignoreFile,
 			},
 			&cli.StringSliceFlag{
