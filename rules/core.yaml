@@ -1,0 +1,62 @@
+- id: core-001
+  description: Missing USER sentence in dockerfile. It is recommended to use a non-root user
+  regex: '^^(USER[\s]+[\w\d_]+)$'
+  reference: https://snyk.io/blog/10-docker-image-security-best-practices/
+  severity: Medium
+- id: core-002
+  description: Posible text plain password in dockerfile
+  regex: '(password|secret)'
+  reference: https://snyk.io/blog/10-docker-image-security-best-practices/
+  severity: High
+- id: core-003
+  description: Recursive copy found
+  regex: '(COPY[\s]+\.[\s]+\.)'
+  reference: https://snyk.io/blog/10-docker-image-security-best-practices/
+  severity: Medium
+- id: core-004
+  description: Use of COPY instead of ADD
+  regex: '(ADD.)'
+  reference: https://snyk.io/blog/10-docker-image-security-best-practices/
+  severity: Low
+- id: core-005
+  description: Use image tag instead of SHA256 hash
+  regex: '^(?!(FROM[\s]+[\w\d\_]+\@sha256\:[\d\w]{64}))'
+  reference: https://medium.com/@tariq.m.islam/container-deployments-a-lesson-in-deterministic-ops-a4a467b14a03
+  severity: Medium
+- id: core-006
+  description: Use of latest tag in FROM sentence is not recommended
+  # Regex for:
+  # FROM python@sha256:65cb2034c64b4519f1481c552a30ae3fe19f47f3610513b0387dc2e1570080fa:latest
+  # FROM python:latest
+  regex: '^(FROM[\s]+[\w\W]+\:latest)'
+  reference: https://snyk.io/blog/10-docker-image-security-best-practices/
+  severity: Medium
+- id: core-007
+  description: Use of deprecated MAINTAINER sentence
+  regex: '^(MAINTAINER[\s]+[\w\d\_\s]+)'
+  reference: https://snyk.io/blog/10-docker-image-security-best-practices/
+  severity: Low
+- id: core-008
+  description: Use of --insecurity=insecure option in RUN sentence
+  regex: '(RUN[\s]+.*[\s]+--insecurity=insecure)'
+  reference: https://docs.docker.com/reference/dockerfile/#run---security
+
+- id: core-009
+  description: Use 'ARG' it isn't recommended to use build arguments for passing secrets such as user credentials. Use 'ENV' instead.
+  regex: '(ARG[\s]+(password|token|secret|key|aws_secret|aws_key|pass|aws_access_key_id|aws_secret_access_key|aws_session_token))'
+  reference: https://docs.docker.com/reference/dockerfile/#arg
+  severity: High
+
+- id: core-010
+  description: HEALTHCHECK contains sensitive information
+  # Regex for:
+  # HEALTHCHECK --interval=5m --timeout=3s CMD curl -f http://localhost/key=XXX || exit 1
+  # HEALTHCHECK --interval=5m --timeout=3s CMD curl -f http://localhost/token=XXX || exit 1
+  # HEALTHCHECK --interval=5m --timeout=3s CMD curl -f http://localhost/password=XXX || exit 1
+  # HEALTHCHECK --interval=5m --timeout=3s CMD curl -f http://localhost/apitoken=XXX || exit 1
+  # HEALTHCHECK CMD curl -f http://localhost/ -H "Authentication: Bearer xxx" || exit 1
+  # HEALTHCHECK CMD curl -f http://localhost/ -H "Authentication: Basic xxx" || exit 1
+  # HEALTHCHECK CMD curl -f http://localhost/ -H "Authentication: Token xxx" || exit 1
+  regex: '(HEALTHCHECK[\s]+.*[\s]+(password|bearer|Bearer|token|key|secret|apitoken|Authentication|Basic|Token))'
+  reference: https://docs.docker.com/reference/dockerfile/#healthcheck
+  severity: High
