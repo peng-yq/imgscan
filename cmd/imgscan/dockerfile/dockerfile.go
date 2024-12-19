@@ -9,15 +9,6 @@ type dockerfileCommand struct {
 	logger logger.Interface
 }
 
-// Rule represents a rule for Dockerfile analysis
-type Rule struct {
-	ID          string `yaml:"id" json:"id"`
-	Description string `yaml:"description" json:"description"`
-	Regex       string `yaml:"regex" json:"regex"`
-	Reference   string `yaml:"reference" json:"reference"`
-	Severity    string `yaml:"severity" json:"severity"`
-}
-
 type options struct {
 	ignoreFile         cli.StringSlice
 	ignoreRule         cli.StringSlice

@@ -16,6 +16,15 @@ import (
 	"strings"
 )
 
+// Rule represents a rule for Dockerfile analysis
+type Rule struct {
+	ID          string `yaml:"id" json:"id"`
+	Description string `yaml:"description" json:"description"`
+	Regex       string `yaml:"regex" json:"regex"`
+	Reference   string `yaml:"reference" json:"reference"`
+	Severity    string `yaml:"severity" json:"severity"`
+}
+
 func (m dockerfileCommand) analyze(c *cli.Context, opts *options) error {
 	dockerfileContent, err := m.loadDockerfile(c)
 	if err != nil {
@@ -245,7 +254,7 @@ func (m dockerfileCommand) matchRules(content string, rules []Rule, ignoreIDs ma
 
 func (m dockerfileCommand) processResults(opts *options, foundIssues []Rule) error {
 	if len(foundIssues) == 0 {
-		fmt.Println("No issues found")
+		m.logger.Infof("No sensitive issues found")
 	} else {
 		data := make([][]string, len(foundIssues))
 		for i, issue := range foundIssues {
