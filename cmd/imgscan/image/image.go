@@ -2,6 +2,7 @@ package image
 
 import (
 	"github.com/urfave/cli/v2"
+	"imgscan/cmd/imgscan/image/analyze"
 	"imgscan/internal/logger"
 )
 
@@ -24,7 +25,9 @@ func (m imageCommand) build() *cli.Command {
 		Usage: "Scan the image tar to analyze",
 	}
 
-	image.Subcommands = []*cli.Command{}
+	image.Subcommands = []*cli.Command{
+		analyze.NewCommand(m.logger),
+	}
 
 	return &image
 }
