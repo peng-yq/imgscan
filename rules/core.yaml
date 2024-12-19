@@ -20,7 +20,7 @@
   severity: Low
 - id: core-005
   description: Use image tag instead of SHA256 hash
-  regex: '^(?!(FROM[\s]+[\w\d\_]+\@sha256\:[\d\w]{64}))'
+  regex: '^(FROM[\s]+[\w\d\_]+:[\w\d\._-]+)'
   reference: https://medium.com/@tariq.m.islam/container-deployments-a-lesson-in-deterministic-ops-a4a467b14a03
   severity: Medium
 - id: core-006
@@ -37,25 +37,21 @@
   description: Use of --insecurity=insecure option in RUN sentence
   regex: '(RUN[\s]+.*[\s]+--insecurity=insecure)'
   reference: https://docs.docker.com/reference/dockerfile/#run---security
-
 - id: core-009
   description: Use 'ARG' it isn't recommended to use build arguments for passing secrets such as user credentials. Use 'ENV' instead.
   regex: '(ARG[\s]+(password|token|secret|key|aws_secret|aws_key|pass|aws_access_key_id|aws_secret_access_key|aws_session_token))'
   reference: https://docs.docker.com/reference/dockerfile/#arg
   severity: High
-
 - id: core-010
   description: HEALTHCHECK contains sensitive information
   regex: '(HEALTHCHECK[\s]+.*[\s]+(password|bearer|Bearer|token|key|secret|apitoken|Authentication|Basic|Token))'
   reference: https://docs.docker.com/reference/dockerfile/#healthcheck
   severity: High
-
 - id: core-011
   description: Ensure multi-stage builds are used to minimize image size and avoid sensitive information
   regex: '(FROM[\s]+[\w\W]+AS[\s]+[\w\W]+)'
   reference: https://snyk.io/blog/10-docker-image-security-best-practices/
   severity: Low
-
 - id: core-012
   description: Ensure WORKDIR is set before RUN instructions
   regex: '(RUN[\s]+.*?WORKDIR[\s]+)'
