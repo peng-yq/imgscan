@@ -22,7 +22,7 @@ func (m imageCommand) build() *cli.Command {
 	// Create the 'image' command
 	image := cli.Command{
 		Name:  "image",
-		Usage: "Scan the image tar to analyze",
+		Usage: "Scan the image config to analyze",
 	}
 
 	image.Subcommands = []*cli.Command{

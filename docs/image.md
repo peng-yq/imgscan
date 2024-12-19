@@ -10,6 +10,8 @@ The `image` command is a subcommand of the `imgscan` tool. And it provides a `an
 
 ## Usage
 
+> `image` command needs root permission.
+
 Run the `analyze` command followed by the Docker image identifier (tag or SHA256):
 
 ```bash
