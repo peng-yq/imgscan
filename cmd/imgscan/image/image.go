@@ -3,6 +3,8 @@ package image
 import (
 	"github.com/urfave/cli/v2"
 	"imgscan/cmd/imgscan/image/analyze"
+	"imgscan/cmd/imgscan/image/backdoor"
+	"imgscan/cmd/imgscan/image/escaperisk"
 	"imgscan/internal/logger"
 )
 
@@ -27,6 +29,8 @@ func (m imageCommand) build() *cli.Command {
 
 	image.Subcommands = []*cli.Command{
 		analyze.NewCommand(m.logger),
+		backdoor.NewCommand(m.logger),
+		escaperisk.NewCommand(m.logger),
 	}
 
 	return &image
